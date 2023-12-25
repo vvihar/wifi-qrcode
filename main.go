@@ -29,7 +29,11 @@ func main() {
 
 	output := promptUser("Enter output file name (default: " + ssid + "): ")
 	if output == "" {
-		output = ssid
+		if ssid == "" {
+			output = "output"
+		} else {
+			output = ssid
+		}
 	}
 
 	format := promptUser("Enter output format (png, svg, or both, default: png): ")
@@ -116,7 +120,7 @@ func main() {
 			}
 		}(file)
 		canvas := svg.New(file)
-		qs := goqrsvg.NewQrSVG(qrCode, 5)
+		qs := goqrsvg.NewQrSVG(qrCode, 256)
 		qs.StartQrSVG(canvas)
 		err = qs.WriteQrSVG(canvas)
 		if err != nil {
